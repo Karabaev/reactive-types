@@ -1,0 +1,14 @@
+{
+    "name": "com.karabaev.reactivetypes",
+    "rootNamespace": "com.karabaev.reactivetypes",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
