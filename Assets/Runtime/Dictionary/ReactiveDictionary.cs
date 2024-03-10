@@ -7,7 +7,7 @@ namespace com.karabaev.reactivetypes.Dictionary
 {
   [PublicAPI]
   public class ReactiveDictionary<TKey, TValue> : IReadOnlyReactiveDictionary<TKey, TValue>, IWriteOnlyReactiveDictionary<TKey, TValue> 
-    where TValue : IEquatable<TValue?>?
+    where TValue : IEquatable<TValue>
   {
     private readonly Dictionary<TKey, TValue> _dictionary;
 
@@ -51,6 +51,10 @@ namespace com.karabaev.reactivetypes.Dictionary
     public void Replace(TKey key, TValue newValue)
     {
       ReplaceInternal(key, newValue, out var oldValue);
+
+      if(oldValue.Equals(newValue))
+        return;
+
       ItemChanged?.Invoke(key, oldValue, newValue);
     }
 
@@ -78,12 +82,6 @@ namespace com.karabaev.reactivetypes.Dictionary
     {
       if(!_dictionary.TryGetValue(key, out oldValue))
         throw new ArgumentOutOfRangeException(nameof(key), $"There is no entry with specified key. Key={key}");
-
-      if(newValue == null && oldValue == null)
-        return;
-
-      if(newValue != null && newValue.Equals(oldValue))
-        return;
 
       _dictionary[key] = newValue;
     }

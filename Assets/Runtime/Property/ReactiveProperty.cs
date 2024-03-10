@@ -1,9 +1,10 @@
+using System;
 using JetBrains.Annotations;
 
 namespace com.karabaev.reactivetypes.Property
 {
   [PublicAPI]
-  public class ReactiveProperty<T> : IReadOnlyReactiveProperty<T>, IWriteOnlyReactiveProperty<T>
+  public class ReactiveProperty<T> : IReadOnlyReactiveProperty<T>, IWriteOnlyReactiveProperty<T> where T : IEquatable<T>
   {
     private T _value;
 
@@ -14,12 +15,9 @@ namespace com.karabaev.reactivetypes.Property
       get => _value;
       set
       {
-        if(value == null && _value == null)
+        if(_value.Equals(value))
           return;
-        
-        if(value != null && value.Equals(_value))
-          return;
-        
+
         var oldValue = _value;
         _value = value;
         Changed?.Invoke(oldValue, _value);
