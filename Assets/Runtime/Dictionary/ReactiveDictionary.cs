@@ -6,8 +6,7 @@ using JetBrains.Annotations;
 namespace com.karabaev.reactivetypes.Dictionary
 {
   [PublicAPI]
-  public class ReactiveDictionary<TKey, TValue> : IReadOnlyReactiveDictionary<TKey, TValue>, IWriteOnlyReactiveDictionary<TKey, TValue> 
-    where TValue : IEquatable<TValue>
+  public class ReactiveDictionary<TKey, TValue> : IReadOnlyReactiveDictionary<TKey, TValue>, IWriteOnlyReactiveDictionary<TKey, TValue>
   {
     private readonly Dictionary<TKey, TValue> _dictionary;
 
@@ -52,7 +51,7 @@ namespace com.karabaev.reactivetypes.Dictionary
     {
       ReplaceInternal(key, newValue, out var oldValue);
 
-      if(oldValue.Equals(newValue))
+      if(EqualityComparer<TValue?>.Default.Equals(oldValue, newValue))
         return;
 
       ItemChanged?.Invoke(key, oldValue, newValue);

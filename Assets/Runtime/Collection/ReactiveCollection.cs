@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace com.karabaev.reactivetypes.Collection
 {
-  public class ReactiveCollection<TItem> : IReadOnlyReactiveCollection<TItem>, IWriteOnlyReactiveCollection<TItem> where TItem : IEquatable<TItem>
+  public class ReactiveCollection<TItem> : IReadOnlyReactiveCollection<TItem>, IWriteOnlyReactiveCollection<TItem>
   {
     private readonly List<TItem> _collection;
 
@@ -87,8 +87,8 @@ namespace com.karabaev.reactivetypes.Collection
       set
       {
         var oldItem = _collection[index];
-
-        if(oldItem.Equals(value))
+        
+        if(EqualityComparer<TItem?>.Default.Equals(value, oldItem))
           return;
 
         _collection[index] = value;
