@@ -20,6 +20,8 @@ namespace com.karabaev.reactivetypes.Dictionary
     
     event DictionaryCleanedHandler? Cleaned;
     
+    int Count { get; }
+    
     TValue Require(TKey key);
 
     TValue? Get(TKey key);

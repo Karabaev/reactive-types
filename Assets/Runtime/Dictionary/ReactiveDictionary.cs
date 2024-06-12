@@ -18,6 +18,8 @@ namespace com.karabaev.reactivetypes.Dictionary
     
     public event IReadOnlyReactiveDictionary<TKey, TValue>.DictionaryCleanedHandler? Cleaned;
 
+    public int Count => _dictionary.Count;
+
     public bool ContainsKey(TKey key) => _dictionary.ContainsKey(key);
 
     public TValue Require(TKey key) => _dictionary[key];
