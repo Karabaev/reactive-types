@@ -41,12 +41,15 @@ namespace com.karabaev.reactivetypes.Dictionary
       ItemAdded?.Invoke(key, value);
     }
 
-    public void Remove(TKey key)
+    public void Remove(TKey key) => Remove(key, out _);
+
+    public bool Remove(TKey key, out TValue removed)
     {
-      if(!_dictionary.Remove(key, out var removed))
-        return;
+      if(!_dictionary.Remove(key, out removed))
+        return false;
       
       ItemRemoved?.Invoke(key, removed);
+      return true;
     }
 
     public void Replace(TKey key, TValue newValue)
