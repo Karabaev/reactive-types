@@ -1,11 +1,9 @@
 ﻿namespace com.karabaev.reactivetypes.Property
 {
-  public interface IReadOnlyReactiveProperty<T>
+  public interface IReadOnlyReactiveProperty<out T>
   {
-    delegate void ValueChangedHandler(T oldValue, T newValue);
-
     T Value { get; }
     
-    event ValueChangedHandler? Changed;
+    event ValueChangedHandler<T>? Changed;
   }
 }

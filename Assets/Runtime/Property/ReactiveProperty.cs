@@ -8,7 +8,7 @@ namespace com.karabaev.reactivetypes.Property
   {
     private TValue _value;
 
-    public event IReadOnlyReactiveProperty<TValue>.ValueChangedHandler? Changed;
+    public event ValueChangedHandler<TValue>? Changed;
 
     public TValue Value
     {
