@@ -21,9 +21,13 @@ namespace com.karabaev.reactivetypes.Dictionary
     event DictionaryCleanedHandler? Cleaned;
     
     int Count { get; }
+
+    bool ContainsKey(TKey key);
     
     TValue Require(TKey key);
 
+    bool TryGet(TKey key, out TValue? result);
+    
     TValue? Get(TKey key);
 
     new Dictionary<TKey, TValue>.Enumerator GetEnumerator();

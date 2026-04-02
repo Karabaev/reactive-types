@@ -30,14 +30,13 @@ namespace com.karabaev.reactivetypes.Dictionary
       return result;
     }
 
-    public bool TryGet(TKey key, out TValue result) => _dictionary.TryGetValue(key, out result);
+    public bool TryGet(TKey key, out TValue? result) => _dictionary.TryGetValue(key, out result);
 
     public void Add(TKey key, TValue value)
     {
-      if(_dictionary.ContainsKey(key))
+      if(!_dictionary.TryAdd(key, value))
         throw new ArgumentOutOfRangeException(nameof(key), $"Entry with the same key there is in the dictionary. Key={key}");
-      
-      _dictionary.Add(key, value);
+
       ItemAdded?.Invoke(key, value);
     }
 
@@ -45,8 +44,7 @@ namespace com.karabaev.reactivetypes.Dictionary
 
     public bool Remove(TKey key, out TValue removed)
     {
-      if(!_dictionary.Remove(key, out removed))
-        return false;
+      if(!_dictionary.Remove(key, out removed)) return false;
       
       ItemRemoved?.Invoke(key, removed);
       return true;
@@ -56,8 +54,7 @@ namespace com.karabaev.reactivetypes.Dictionary
     {
       ReplaceInternal(key, newValue, out var oldValue);
 
-      if(EqualityComparer<TValue?>.Default.Equals(oldValue, newValue))
-        return;
+      if(EqualityComparer<TValue?>.Default.Equals(oldValue, newValue)) return;
 
       ItemChanged?.Invoke(key, oldValue, newValue);
     }
@@ -96,7 +93,7 @@ namespace com.karabaev.reactivetypes.Dictionary
 
     public Dictionary<TKey, TValue>.Enumerator GetEnumerator() => _dictionary.GetEnumerator();
 
-    public ReactiveDictionary() => _dictionary = new();
+    public ReactiveDictionary() => _dictionary = new Dictionary<TKey, TValue>();
 
     public ReactiveDictionary(Dictionary<TKey, TValue> dictionary) => _dictionary = dictionary;
   }
